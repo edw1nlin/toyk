@@ -1,0 +1,12 @@
+name = "toyk"
+main = "worker.js"
+compatibility_date = "2026-05-21"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "japan-trip-db"
+database_id = "PASTE_YOUR_D1_DATABASE_ID_HERE"

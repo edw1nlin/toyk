@@ -1,0 +1,14 @@
+{
+  "name": "japan-trip-2026",
+  "version": "1.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --config wrangler.toml --assets ./public",
+    "deploy": "wrangler deploy --config wrangler.toml --assets ./public",
+    "db:migrate:remote": "wrangler d1 execute japan-trip-db --remote --file=schema.sql"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+  }
+}
