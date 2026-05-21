@@ -1,0 +1,13 @@
+name = "japan-trip-2026"
+main = "worker.js"
+compatibility_date = "2026-05-21"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# Replace database_id after creating/binding your Cloudflare D1 database.
+[[d1_databases]]
+binding = "DB"
+database_name = "japan-trip-db"
+database_id = "PASTE_YOUR_D1_DATABASE_ID_HERE"

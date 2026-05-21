@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Japan Trip 2026 · Anime Torii Edition</title>
+  <meta name="description" content="Japan Trip 2026 dashboard with itinerary, map links, completed plans, drag reorder, weather, spending, flights, and stays." />
+  <meta name="theme-color" content="#f6e7c8" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+</head>
+<body class="locked">
+  <div id="gate">
+    <section class="paper gate-card">
+      <div class="seal">旅</div>
+      <p class="kicker">Private Storybook</p>
+      <h1>Japan Trip 2026</h1>
+      <p class="soft">Enter the shared passcode to begin.</p>
+      <input id="passwordInput" type="password" inputmode="numeric" placeholder="Passcode" />
+      <button class="btn primary" onclick="unlockSite()">Open the Gate</button>
+      <p class="error" id="passwordError"></p>
+    </section>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="cloud c1"></div><div class="cloud c2"></div><div class="spark s1">✦</div><div class="spark s2">◌</div>
+    <nav class="nav container">
+      <button class="brand" onclick="scrollToSection('top')"><span>旅</span> Japan 2026</button>
+      <div class="navlinks">
+        <button onclick="scrollToSection('plan')">Plan</button>
+        <button onclick="scrollToSection('weather')">Weather</button>
+        <button onclick="scrollToSection('spending')">Spending</button>
+        <button onclick="scrollToSection('details')">Details</button>
+      </div>
+    </nav>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">東京 · 鎌倉 · 箱根 · 横浜</p>
+        <h1>A small journey through painted skies.</h1>
+        <p class="lead">A warm anime-inspired travel dashboard using your torii photo as the storybook route artwork.</p>
+        <div class="actions">
+          <button class="btn primary" onclick="scrollToSection('plan')">Plan the Days</button>
+          <button class="btn secondary" onclick="scrollToSection('weather')">Check the Sky</button>
+          <button class="btn secondary" onclick="scrollToSection('spending')">Track Spending</button>
+        </div>
+      </div>
+      <aside class="paper route-card">
+        <div class="route-art"><img src="postcard-fuji-pagoda.jpg" alt="Mount Fuji and pagoda travel artwork" /><div class="wash"></div><div class="sun"></div></div>
+        <div class="route-info">
+          <p class="kicker">6–12 Jun 2026</p>
+          <h2>Route Card</h2>
+          <ol>
+            <li><b>Tokyo</b><span>Neon evenings</span></li>
+            <li><b>Kamakura</b><span>Temple breeze</span></li>
+            <li><b>Hakone</b><span>Onsen air</span></li>
+            <li><b>Yokohama</b><span>Harbor lights</span></li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="summary">
+      <article class="paper"><p class="kicker">Dates</p><h2>6–12 Jun</h2><p>Tokyo 3 nights · Yokohama 3 nights</p></article>
+      <article class="paper"><p class="kicker">Mood</p><h2>Sea / Onsen / Harbor</h2><p>Soft skies, warm lights, temple paths, and quiet side streets.</p></article>
+      <article class="paper"><p class="kicker">Crew</p><h2>3 Friends</h2><p>A simple dashboard for the shared trip essentials.</p></article>
+    </section>
+
+    <section id="plan">
+      <div class="section-head">
+        <div><p class="kicker">Itinerary</p><h2>Daily Travel Plan</h2><p class="soft">Add plans, open Google Maps, mark completed, and drag cards to reorder.</p></div>
+        <button class="btn secondary" onclick="clearAllPlans()">Clear Plans</button>
+      </div>
+      <div class="two">
+        <form class="paper" id="planForm">
+          <h3>Add Plan</h3>
+          <div class="form">
+            <label>Day<select id="planDay"></select></label>
+            <div class="two tight">
+              <label>Time<input id="planTime" type="time" /></label>
+              <label>Place<input id="planLocation" placeholder="Shibuya, Hakone Shrine, Chinatown…" /></label>
+            </div>
+            <label>Plan Title<input id="planTitle" placeholder="Morning coffee, temple visit, dinner…" required /></label>
+            <label>Notes<textarea id="planNotes" placeholder="Reservation details, transport notes, reminders…"></textarea></label>
+            <button class="btn primary" type="submit">Add to Plan</button>
+          </div>
+        </form>
+        <article class="paper">
+          <p class="kicker">Overview</p>
+          <h3>Trip Plan Board</h3>
+          <p class="soft">Tip: drag a plan card within a day or drop it into another day. Use the checkbox when finished.</p>
+          <div id="planStats" class="plan-stats"></div>
+        </article>
+      </div>
+      <div class="plan-board" id="travelPlanBoard"></div>
+    </section>
+
+    <section id="weather">
+      <div class="section-head"><div><p class="kicker">Forecast</p><h2>Weather Lanterns</h2><p class="soft">Current conditions for the main destinations.</p></div><button class="btn secondary" onclick="loadWeather(true)">Refresh</button></div>
+      <p class="status" id="weatherStatus">Loading weather…</p><div class="weather-grid" id="weatherGrid"></div>
+    </section>
+
+    <section id="spending">
+      <div class="section-head"><div><p class="kicker">Money</p><h2>Coin Pouch</h2><p class="soft">Bill splitting with exact settlement instructions.</p></div></div>
+      <div class="paper tools"><div><p class="kicker">Backup</p><h3>Export / Import</h3><p class="soft">Backs up expenses, plans, rates, and currency.</p></div><div class="tool-actions"><button class="btn secondary" onclick="exportTripData()">Export JSON</button><label class="btn secondary" for="backupImport">Import JSON</label><input id="backupImport" type="file" accept="application/json,.json" /></div></div>
+      <div class="paper rate"><label>Display totals in<select id="displayCurrency"><option value="JPY">JPY</option><option value="HKD" selected>HKD</option><option value="USD">USD</option></select></label><div><b>Exchange rate</b><p class="soft" id="rateStatus">Using saved rates until automatic rates load.</p><small class="soft" id="rateNow">Current: ¥1 = HK$0.0520 / US$0.0067</small></div><button class="btn secondary" onclick="fetchLatestRates()">Refresh Rates</button></div>
+      <div class="two"><form class="paper" id="expenseForm"><h3>Add Expense</h3><div class="form"><label>Day<select id="expenseDay"></select></label><label>Paid by<select id="expensePayer"></select></label><div class="two tight"><label>Amount<input id="expenseAmount" type="number" min="0" step="0.01" placeholder="3600" /></label><label>Currency<select id="expenseCurrency"><option value="JPY">JPY</option><option value="HKD">HKD</option><option value="USD">USD</option></select></label></div><label>Category<select id="expenseCategory"></select></label><label>Note<input id="expenseNote" placeholder="Ramen, train tickets, coffee…" /></label><div><p class="label">Split with</p><div class="split-grid" id="splitButtons"></div></div><button class="btn primary" type="submit">Add to Pouch</button></div></form><div><article class="paper total-card"><p class="kicker">Total</p><p class="total" id="totalSpent">HK$0.00</p><p class="soft" id="totalBase">Base amount: ¥0</p></article><div id="personSummary"></div></div></div>
+      <div class="two lower"><article class="paper"><div class="mini"><h3>Daily Totals</h3><button class="danger" onclick="clearAllExpenses()">Clear all</button></div><div id="dailyTotals"></div></article><article class="paper"><h3>History</h3><div class="history" id="expenseHistory"></div></article></div><article class="paper settlement"><p class="kicker">Settle</p><h3>Who pays whom</h3><div id="settlementPlan"></div></article>
+    </section>
+
+    <section id="details"><div class="section-head"><div><p class="kicker">Essentials</p><h2>Travel Notes</h2><p class="soft">Flights and stays, kept simple.</p></div></div><div class="two"><div><h3 class="subhead">Flights</h3><div class="stack" id="flightCards"></div></div><div><h3 class="subhead">Stays</h3><div class="stack" id="stayCards"></div></div></div></section>
+  </main>
+
+  <nav class="mobile-nav"><button onclick="scrollToSection('plan')">Plan</button><button onclick="scrollToSection('weather')">Sky</button><button onclick="scrollToSection('spending')">Coins</button><button onclick="scrollToSection('details')">Notes</button></nav>
+  <footer class="footer">Japan Trip 2026 · Anime torii photo edition</footer>
+</body>
+</html>
