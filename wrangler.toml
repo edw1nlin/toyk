@@ -8,5 +8,5 @@ binding = "ASSETS"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "japan-trip-db"
-database_id = "PASTE_YOUR_D1_DATABASE_ID_HERE"
+database_name = "japan-trip-2026-db"
+database_id = "82124be9-c0a2-448c-a183-b2b1b94f2085"
